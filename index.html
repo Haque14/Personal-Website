@@ -78,9 +78,19 @@
     overflow:hidden;
     border-bottom:1px solid var(--line);
   }
-  .hero .wrap{ max-width:780px; }
+  .hero .wrap{ max-width:940px; display:flex; align-items:center; gap:52px; }
+  .hero-text{ flex:1; min-width:0; }
   .hero h1{ font-size:clamp(36px,5.6vw,60px); line-height:1.06; margin:0 0 20px; }
   .hero .lede{ font-size:18px; color:var(--paper-dim); max-width:52ch; margin:0 0 32px; }
+  .hero-photo{
+    flex-shrink:0;
+    width:172px; height:172px;
+    border-radius:50%;
+    overflow:hidden;
+    border:2px solid var(--ember);
+    box-shadow:0 0 0 6px var(--ember-soft);
+  }
+  .hero-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
   .pillrow{ display:flex; flex-wrap:wrap; gap:10px; }
   .pill{
     font-family:'IBM Plex Mono', monospace;
@@ -129,6 +139,13 @@
   .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
   .tag{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--muted); border:1px solid var(--line); border-radius:3px; padding:4px 9px; }
 
+  .exp-group{ margin-bottom:40px; }
+  .exp-group:last-child{ margin-bottom:0; }
+  .group-label{
+    font-family:'IBM Plex Mono', monospace; font-size:13px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ember); font-weight:500; margin:0 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line);
+  }
+
   /* Publications */
   .pub-group{ margin-bottom:40px; }
   .pub-group:last-child{ margin-bottom:0; }
@@ -170,6 +187,10 @@
   footer{ padding:30px 0 50px; text-align:center; color:var(--muted); font-size:13px; font-family:'IBM Plex Mono', monospace; }
 
   @media (max-width:860px){
+    .hero .wrap{ flex-direction:column-reverse; text-align:center; gap:28px; }
+    .hero .lede{ margin-left:auto; margin-right:auto; }
+    .hero .pillrow{ justify-content:center; }
+    .hero-photo{ width:132px; height:132px; }
     .about-grid{ grid-template-columns:1fr; }
     .skills-grid{ grid-template-columns:1fr; }
     .navlinks{
@@ -209,16 +230,19 @@
 
   <section class="hero">
     <div class="wrap">
-      <div>
+      <div class="hero-text">
         <div class="eyebrow">Mechanical Engineering · University of Tennessee, Knoxville</div>
         <h1>Md Ershadul<br>Haque</h1>
         <p class="lede">PhD candidate building discontinuous Galerkin solvers for the radiative transfer equation — adaptive meshes, parallel HPC, and physics-informed machine learning, from complex 2D geometries to graded-index media.</p>
         <div class="pillrow">
           <a class="pill" href="mailto:ershadulhaque09@gmail.com"><span class="dot"></span>ershadulhaque09@gmail.com</a>
           <a class="pill" href="tel:+18659854130"><span class="dot"></span>(865) 985-4130</a>
-          <a class="pill" href="#" target="_blank" rel="noopener"><span class="dot"></span>Google Scholar</a>
-          <a class="pill" href="#" target="_blank" rel="noopener"><span class="dot"></span>LinkedIn</a>
+          <a class="pill" href="https://scholar.google.com/citations?user=vzWX1xkAAAAJ&hl=en" target="_blank" rel="noopener"><span class="dot"></span>Google Scholar</a>
+          <a class="pill" href="https://www.linkedin.com/in/md-ershadul-haque-a7884ab5/" target="_blank" rel="noopener"><span class="dot"></span>LinkedIn</a>
         </div>
+      </div>
+      <div class="hero-photo">
+        <img src="photo.jpg" alt="Portrait of Md Ershadul Haque">
       </div>
     </div>
   </section>
@@ -267,16 +291,6 @@
           <div class="card-date">Oct 2026 · GPA 3.90/4.0</div>
         </div>
         <p class="card-thesis">Thesis: Discontinuous Galerkin Method for Solving Radiative Transfer Equation</p>
-        <div class="tags">
-          <span class="tag">Finite Elements for Engineering</span>
-          <span class="tag">Discontinuous Galerkin Methods</span>
-          <span class="tag">Advanced Radiation Heat Transfer</span>
-          <span class="tag">Advanced Heat Conduction</span>
-          <span class="tag">Machine Learning for MSE</span>
-          <span class="tag">Applied Linear Algebra</span>
-          <span class="tag">Partial Differential Equations</span>
-          <span class="tag">Numerical Methods for Engineers</span>
-        </div>
       </div>
 
       <div class="card">
@@ -288,15 +302,6 @@
           <div class="card-date">Dec 2021 · GPA 3.66/4.0</div>
         </div>
         <p class="card-thesis">Thesis: The solution of radiative transfer equation in 2D complex geometries using body-fitted coordinates</p>
-        <div class="tags">
-          <span class="tag">Advanced Thermodynamics I</span>
-          <span class="tag">Advanced Fluid Mechanics I</span>
-          <span class="tag">Convection Heat Transfer</span>
-          <span class="tag">Math Methods for Engineers</span>
-          <span class="tag">Thermal Desalination Systems</span>
-          <span class="tag">Solar Energy Utilization</span>
-          <span class="tag">Continuum Mechanics</span>
-        </div>
       </div>
 
       <div class="card">
@@ -319,87 +324,99 @@
         <h2>Research, teaching &amp; industry</h2>
       </div>
 
-      <div class="card">
-        <div class="card-top">
-          <div><h3>Graduate Research Assistant</h3><p class="card-org">Dept. of Mechanical &amp; Aerospace Engineering, University of Tennessee Knoxville</p></div>
-          <div class="card-date">Jun 2022 – Present</div>
+      <div class="exp-group">
+        <div class="group-label">Research Experience</div>
+
+        <div class="card">
+          <div class="card-top">
+            <div><h3>Graduate Research Assistant</h3><p class="card-org">Dept. of Mechanical &amp; Aerospace Engineering, University of Tennessee Knoxville</p></div>
+            <div class="card-date">Jun 2022 – Present</div>
+          </div>
+          <ul>
+            <li>Solve the radiative transfer equation using discontinuous Galerkin FEM</li>
+            <li>Apply multilevel mesh refinement across both space and angle domains</li>
+            <li>Implement parallel computing for large-scale solves</li>
+            <li>Apply multigrid techniques to accelerate convergence</li>
+          </ul>
         </div>
-        <ul>
-          <li>Solve the radiative transfer equation using discontinuous Galerkin FEM</li>
-          <li>Apply multilevel mesh refinement across both space and angle domains</li>
-          <li>Implement parallel computing for large-scale solves</li>
-          <li>Apply multigrid techniques to accelerate convergence</li>
-        </ul>
+
+        <div class="card">
+          <div class="card-top">
+            <div><h3>Research Assistant</h3><p class="card-org">City &amp; Regional Planning Dept., King Fahd University of Petroleum &amp; Minerals</p></div>
+            <div class="card-date">Sep 2020 – Dec 2021</div>
+          </div>
+          <ul>
+            <li>Solved a range of partial differential equations numerically in MATLAB</li>
+            <li>Numerically modeled naphtha reforming kinetics</li>
+          </ul>
+        </div>
       </div>
 
-      <div class="card">
-        <div class="card-top">
-          <div><h3>Graduate Teaching Assistant</h3><p class="card-org">Dept. of Mechanical &amp; Aerospace Engineering, University of Tennessee Knoxville</p></div>
-          <div class="card-date">Jan 2025 – Present</div>
+      <div class="exp-group">
+        <div class="group-label">Teaching Experience</div>
+
+        <div class="card">
+          <div class="card-top">
+            <div><h3>Graduate Teaching Assistant</h3><p class="card-org">Dept. of Mechanical &amp; Aerospace Engineering, University of Tennessee Knoxville</p></div>
+            <div class="card-date">Jan 2025 – Present</div>
+          </div>
+          <ul><li>Grade homework and exams</li></ul>
         </div>
-        <ul><li>Grade homework and exams</li></ul>
+
+        <div class="card">
+          <div class="card-top">
+            <div><h3>Teaching Assistant — Materials Lab (ME 217)</h3><p class="card-org">Mechanical Engineering Dept., King Fahd University of Petroleum &amp; Minerals</p></div>
+            <div class="card-date">Sep 2021 – Dec 2021</div>
+          </div>
+          <ul><li>Instructed the Materials Lab course</li></ul>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <div><h3>Grader</h3><p class="card-org">Mechanical Engineering Dept., King Fahd University of Petroleum &amp; Minerals</p></div>
+            <div class="card-date">Sep 2019 – May 2021</div>
+          </div>
+          <ul><li>Graded homework and administered exam duty for core ME courses</li></ul>
+        </div>
       </div>
 
-      <div class="card">
-        <div class="card-top">
-          <div><h3>Teaching Assistant — Materials Lab (ME 217)</h3><p class="card-org">Mechanical Engineering Dept., King Fahd University of Petroleum &amp; Minerals</p></div>
-          <div class="card-date">Sep 2021 – Dec 2021</div>
-        </div>
-        <ul><li>Instructed the Materials Lab course</li></ul>
-      </div>
+      <div class="exp-group">
+        <div class="group-label">Industry Experience</div>
 
-      <div class="card">
-        <div class="card-top">
-          <div><h3>Research Assistant</h3><p class="card-org">City &amp; Regional Planning Dept., King Fahd University of Petroleum &amp; Minerals</p></div>
-          <div class="card-date">Sep 2020 – Dec 2021</div>
+        <div class="card">
+          <div class="card-top">
+            <div><h3>Process Engineer</h3><p class="card-org">Compressor R&amp;D, Walton Hi-Tech Industries Ltd., Dhaka, Bangladesh</p></div>
+            <div class="card-date">May 2017 – Dec 2018</div>
+          </div>
+          <ul>
+            <li>Led product implementation and process engineering</li>
+            <li>Ran automatic lathe, milling, drilling &amp; grinding lines for compressor pistons and connecting rods</li>
+            <li>Oversaw an automatic resistance welding line</li>
+            <li>Managed a washing and phosphating line</li>
+          </ul>
         </div>
-        <ul>
-          <li>Solved a range of partial differential equations numerically in MATLAB</li>
-          <li>Numerically modeled naphtha reforming kinetics</li>
-        </ul>
-      </div>
 
-      <div class="card">
-        <div class="card-top">
-          <div><h3>Grader</h3><p class="card-org">Mechanical Engineering Dept., King Fahd University of Petroleum &amp; Minerals</p></div>
-          <div class="card-date">Sep 2019 – May 2021</div>
+        <div class="card">
+          <div class="card-top">
+            <div><h3>Sales &amp; Service Engineer</h3><p class="card-org">Mason Acoustic Company Ltd., Dhaka, Bangladesh</p></div>
+            <div class="card-date">Aug 2016 – Apr 2017</div>
+          </div>
+          <ul>
+            <li>Owned sales targets for acoustic treatment products</li>
+            <li>Inspected, installed, and maintained acoustic treatments in generator rooms, auditoriums, and TV studios</li>
+          </ul>
         </div>
-        <ul><li>Graded homework and administered exam duty for core ME courses</li></ul>
-      </div>
 
-      <div class="card">
-        <div class="card-top">
-          <div><h3>Process Engineer</h3><p class="card-org">Compressor R&amp;D, Walton Hi-Tech Industries Ltd., Dhaka, Bangladesh</p></div>
-          <div class="card-date">May 2017 – Dec 2018</div>
+        <div class="card">
+          <div class="card-top">
+            <div><h3>Industrial Internship</h3><p class="card-org">Ashuganj Power Station Company Ltd., Bangladesh</p></div>
+            <div class="card-date"></div>
+          </div>
+          <ul>
+            <li>Investigated operation and maintenance across plant workstations</li>
+            <li>Studied steam boilers, steam and gas turbines, fans, compressors, condensers, gas engines, and pumps</li>
+          </ul>
         </div>
-        <ul>
-          <li>Led product implementation and process engineering</li>
-          <li>Ran automatic lathe, milling, drilling &amp; grinding lines for compressor pistons and connecting rods</li>
-          <li>Oversaw an automatic resistance welding line</li>
-          <li>Managed a washing and phosphating line</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="card-top">
-          <div><h3>Sales &amp; Service Engineer</h3><p class="card-org">Mason Acoustic Company Ltd., Dhaka, Bangladesh</p></div>
-          <div class="card-date">Aug 2016 – Apr 2017</div>
-        </div>
-        <ul>
-          <li>Owned sales targets for acoustic treatment products</li>
-          <li>Inspected, installed, and maintained acoustic treatments in generator rooms, auditoriums, and TV studios</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="card-top">
-          <div><h3>Industrial Internship</h3><p class="card-org">Ashuganj Power Station Company Ltd., Bangladesh</p></div>
-          <div class="card-date"></div>
-        </div>
-        <ul>
-          <li>Investigated operation and maintenance across plant workstations</li>
-          <li>Studied steam boilers, steam and gas turbines, fans, compressors, condensers, gas engines, and pumps</li>
-        </ul>
       </div>
 
     </div>
@@ -501,12 +518,12 @@
     <div class="wrap">
       <div class="eyebrow" style="justify-content:center;">Get in touch</div>
       <h2>Let's talk about radiative transfer,<br>or anything nearby.</h2>
-      <p>Open to postdoctoral, research, and collaboration opportunities in computational methods, HPC, and physics-based machine learning.</p>
+      <p>Open to industry, postdoctoral, and assistant professor opportunities in computational methods, HPC, and physics-based machine learning.</p>
       <div class="pillrow">
         <a class="pill" href="mailto:ershadulhaque09@gmail.com"><span class="dot"></span>ershadulhaque09@gmail.com</a>
         <a class="pill" href="tel:+18659854130"><span class="dot"></span>(865) 985-4130</a>
-        <a class="pill" href="#" target="_blank" rel="noopener"><span class="dot"></span>Google Scholar</a>
-        <a class="pill" href="#" target="_blank" rel="noopener"><span class="dot"></span>LinkedIn</a>
+        <a class="pill" href="https://scholar.google.com/citations?user=vzWX1xkAAAAJ&hl=en" target="_blank" rel="noopener"><span class="dot"></span>Google Scholar</a>
+        <a class="pill" href="https://www.linkedin.com/in/md-ershadul-haque-a7884ab5/" target="_blank" rel="noopener"><span class="dot"></span>LinkedIn</a>
       </div>
     </div>
   </section>
@@ -517,3 +534,4 @@
 
 </body>
 </html>
+
