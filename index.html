@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Md Ershadul Haque — Computational Radiative Transfer</title>
+<meta name="description" content="Md Ershadul Haque — PhD Candidate in Mechanical Engineering, University of Tennessee Knoxville. Discontinuous Galerkin methods for radiative transfer, adaptive mesh refinement, HPC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0A0E14;
+    --slate:#121924;
+    --slate-2:#1A2330;
+    --paper:#ECE9E1;
+    --paper-dim:#B7B2A6;
+    --muted:#7C8695;
+    --ember:#E3A857;
+    --ember-soft:rgba(227,168,87,0.14);
+    --steel:#6C93B5;
+    --steel-soft:rgba(108,147,181,0.14);
+    --line:rgba(236,233,225,0.09);
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--void);
+    color:var(--paper);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--ember); color:var(--void); }
+  a{ color:inherit; text-decoration:none; }
+  h1,h2,h3{ font-family:'Fraunces', serif; font-weight:600; margin:0; color:var(--paper); }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 28px; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ember);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{ content:""; width:22px; height:1px; background:var(--ember); display:inline-block; }
+
+  /* ---------- NAV ---------- */
+  header.site{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(10,14,20,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:var(--maxw); margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{ font-family:'Fraunces', serif; font-weight:600; font-size:19px; letter-spacing:0.01em; }
+  .logo span{ color:var(--ember); }
+  .navlinks{ display:flex; gap:30px; font-size:14px; }
+  .navlinks a{ color:var(--paper-dim); transition:color .2s; position:relative; }
+  .navlinks a:hover{ color:var(--paper); }
+  .navlinks a:focus-visible, a:focus-visible{ outline:2px solid var(--ember); outline-offset:3px; border-radius:2px; }
+  #navToggle{ display:none; }
+  .burger{ display:none; flex-direction:column; gap:5px; cursor:pointer; padding:6px; }
+  .burger span{ width:22px; height:2px; background:var(--paper); display:block; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:168px 0 96px;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero .wrap{ max-width:780px; }
+  .hero h1{ font-size:clamp(36px,5.6vw,60px); line-height:1.06; margin:0 0 20px; }
+  .hero .lede{ font-size:18px; color:var(--paper-dim); max-width:52ch; margin:0 0 32px; }
+  .pillrow{ display:flex; flex-wrap:wrap; gap:10px; }
+  .pill{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    padding:9px 14px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    color:var(--paper-dim);
+    display:inline-flex; align-items:center; gap:8px;
+    transition:border-color .2s, color .2s;
+  }
+  .pill:hover{ border-color:var(--ember); color:var(--paper); }
+  .pill .dot{ width:6px; height:6px; border-radius:50%; background:var(--ember); }
+  /* ---------- SECTIONS ---------- */
+  section{ padding:88px 0; border-bottom:1px solid var(--line); }
+  section:last-of-type{ border-bottom:none; }
+  .section-head{ margin-bottom:44px; max-width:60ch; }
+  .section-head h2{ font-size:clamp(26px,3.2vw,34px); }
+
+  /* About */
+  .about-grid{ display:grid; grid-template-columns:1.4fr 1fr; gap:56px; }
+  .about-grid p{ color:var(--paper-dim); margin:0 0 18px; font-size:16px; }
+  .about-grid p:last-child{ margin-bottom:0; }
+  .facts{ background:var(--slate); border:1px solid var(--line); border-radius:4px; padding:26px 28px; align-self:start; }
+  .facts dt{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-top:16px; }
+  .facts dt:first-child{ margin-top:0; }
+  .facts dd{ margin:4px 0 0; color:var(--paper); font-size:14.5px; }
+
+  /* Education / Experience cards */
+  .card{
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:28px 30px;
+    margin-bottom:18px;
+    background:var(--slate);
+    position:relative;
+  }
+  .card:last-child{ margin-bottom:0; }
+  .card-top{ display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:6px; }
+  .card-top h3{ font-size:20px; }
+  .card-org{ color:var(--steel); font-size:14.5px; margin:2px 0 0; }
+  .card-date{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--muted); white-space:nowrap; padding-top:4px; }
+  .card-thesis{ color:var(--paper-dim); font-size:14.5px; margin:14px 0 0; font-style:italic; }
+  .card ul{ margin:14px 0 0; padding-left:18px; color:var(--paper-dim); font-size:14.5px; }
+  .card ul li{ margin-bottom:5px; }
+  .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  .tag{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--muted); border:1px solid var(--line); border-radius:3px; padding:4px 9px; }
+
+  /* Publications */
+  .pub-group{ margin-bottom:40px; }
+  .pub-group:last-child{ margin-bottom:0; }
+  .pub-group h3{
+    font-family:'IBM Plex Mono', monospace; font-size:13px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ember); font-weight:500; margin-bottom:18px; padding-bottom:10px; border-bottom:1px solid var(--line);
+  }
+  .pub-list{ list-style:none; margin:0; padding:0; counter-reset:pub; }
+  .pub-list li{ counter-increment:pub; display:grid; grid-template-columns:34px 1fr; gap:14px; padding:13px 0; border-bottom:1px dashed var(--line); }
+  .pub-list li:last-child{ border-bottom:none; }
+  .pub-list li::before{ content: counter(pub); font-family:'IBM Plex Mono', monospace; color:var(--muted); font-size:13px; padding-top:1px; }
+  .pub-text{ font-size:14.5px; color:var(--paper-dim); }
+  .pub-text b{ color:var(--paper); font-weight:500; }
+  .pub-text .venue{ color:var(--steel); }
+  .pub-text a{ color:var(--ember); border-bottom:1px solid transparent; }
+  .pub-text a:hover{ border-bottom-color:var(--ember); }
+  .badge-award{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--ember); border:1px solid var(--ember-soft); padding:2px 7px; border-radius:3px; margin-left:6px; white-space:nowrap; }
+
+  /* Skills */
+  .skills-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .skill-card{ border:1px solid var(--line); border-radius:4px; padding:24px 26px; background:var(--slate); }
+  .skill-card h3{ font-size:14px; font-family:'IBM Plex Mono', monospace; text-transform:uppercase; letter-spacing:.06em; color:var(--steel); margin-bottom:16px; font-weight:500; }
+  .chiprow{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{ font-size:13px; padding:6px 11px; border:1px solid var(--line); border-radius:3px; color:var(--paper-dim); }
+
+  /* Honors */
+  .honors-list{ list-style:none; margin:0; padding:0; }
+  .honors-list li{ display:flex; gap:20px; padding:16px 0; border-bottom:1px solid var(--line); align-items:baseline; }
+  .honors-list li:last-child{ border-bottom:none; }
+  .honors-year{ font-family:'IBM Plex Mono', monospace; color:var(--ember); font-size:14px; min-width:96px; }
+  .honors-text{ color:var(--paper-dim); font-size:15px; }
+  .honors-text b{ color:var(--paper); font-weight:500; }
+
+  /* Contact / footer */
+  .contact{ text-align:center; }
+  .contact h2{ font-size:clamp(28px,4vw,40px); margin-bottom:16px; }
+  .contact p{ color:var(--paper-dim); max-width:48ch; margin:0 auto 34px; }
+  .contact .pillrow{ justify-content:center; }
+  footer{ padding:30px 0 50px; text-align:center; color:var(--muted); font-size:13px; font-family:'IBM Plex Mono', monospace; }
+
+  @media (max-width:860px){
+    .about-grid{ grid-template-columns:1fr; }
+    .skills-grid{ grid-template-columns:1fr; }
+    .navlinks{
+      position:fixed; top:64px; left:0; right:0; bottom:0;
+      background:var(--void); flex-direction:column; padding:32px 28px; gap:22px;
+      transform:translateX(100%); transition:transform .28s ease; font-size:17px;
+    }
+    #navToggle:checked ~ .navlinks{ transform:translateX(0); }
+    .burger{ display:flex; }
+  }
+  @media (max-width:560px){
+    .card-top{ flex-direction:column; gap:4px; }
+    .pub-list li{ grid-template-columns:22px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav>
+    <a class="logo" href="#top">M.E. <span>Haque</span></a>
+    <input type="checkbox" id="navToggle">
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#publications">Publications</a>
+      <a href="#skills">Skills</a>
+      <a href="#honors">Honors</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <label class="burger" for="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></label>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Mechanical Engineering · University of Tennessee, Knoxville</div>
+        <h1>Md Ershadul<br>Haque</h1>
+        <p class="lede">PhD candidate building discontinuous Galerkin solvers for the radiative transfer equation — adaptive meshes, parallel HPC, and physics-informed machine learning, from complex 2D geometries to graded-index media.</p>
+        <div class="pillrow">
+          <a class="pill" href="mailto:ershadulhaque09@gmail.com"><span class="dot"></span>ershadulhaque09@gmail.com</a>
+          <a class="pill" href="tel:+18659854130"><span class="dot"></span>(865) 985-4130</a>
+          <a class="pill" href="#" target="_blank" rel="noopener"><span class="dot"></span>Google Scholar</a>
+          <a class="pill" href="#" target="_blank" rel="noopener"><span class="dot"></span>LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">About</div>
+        <h2>Radiation transport, one element at a time.</h2>
+      </div>
+      <div class="about-grid">
+        <div>
+          <p>Md Ershadul Haque is a PhD candidate in Mechanical Engineering at the University of Tennessee, Knoxville, expected to graduate in October 2026 with a 3.90/4.0 GPA. His dissertation, <em>"Discontinuous Galerkin Method for Solving Radiative Transfer Equation,"</em> develops high-order numerical methods for radiation transport in participating media — combining multilevel mesh refinement across space and angle, multigrid acceleration, and parallel computing to make these solves tractable at scale.</p>
+          <p>Before Knoxville, he earned an MS in Mechanical Engineering at King Fahd University of Petroleum and Minerals in Dhahran, Saudi Arabia, where his thesis solved the radiative transfer equation in 2D complex geometries using body-fitted coordinates. He holds a BS in Mechanical Engineering from Rajshahi University of Engineering and Technology, Bangladesh.</p>
+          <p>His work sits at the intersection of finite element methods, high-performance computing, and electromagnetic scattering, with a growing interest in machine learning for physics. Alongside the dissertation, he has research experience in PDE-based modeling, microgrid energy systems, and industrial process engineering.</p>
+        </div>
+        <dl class="facts">
+          <dt>Current position</dt>
+          <dd>Graduate Research &amp; Teaching Assistant, UTK</dd>
+          <dt>PhD expected</dt>
+          <dd>October 2026 · GPA 3.90/4.0</dd>
+          <dt>Location</dt>
+          <dd>Knoxville, Tennessee, USA</dd>
+          <dt>Focus areas</dt>
+          <dd>FEM · DG methods · HPC simulation · EM scattering · ML for physics</dd>
+          <dt>Publications</dt>
+          <dd>5 journal papers · 1 book chapter · 8 conference papers</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Education</div>
+        <h2>Degrees &amp; thesis work</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div>
+            <h3>Doctor of Philosophy, Mechanical Engineering</h3>
+            <p class="card-org">University of Tennessee, Knoxville, USA</p>
+          </div>
+          <div class="card-date">Oct 2026 · GPA 3.90/4.0</div>
+        </div>
+        <p class="card-thesis">Thesis: Discontinuous Galerkin Method for Solving Radiative Transfer Equation</p>
+        <div class="tags">
+          <span class="tag">Finite Elements for Engineering</span>
+          <span class="tag">Discontinuous Galerkin Methods</span>
+          <span class="tag">Advanced Radiation Heat Transfer</span>
+          <span class="tag">Advanced Heat Conduction</span>
+          <span class="tag">Machine Learning for MSE</span>
+          <span class="tag">Applied Linear Algebra</span>
+          <span class="tag">Partial Differential Equations</span>
+          <span class="tag">Numerical Methods for Engineers</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div>
+            <h3>Master of Science, Mechanical Engineering</h3>
+            <p class="card-org">King Fahd University of Petroleum &amp; Minerals, Dhahran, Saudi Arabia</p>
+          </div>
+          <div class="card-date">Dec 2021 · GPA 3.66/4.0</div>
+        </div>
+        <p class="card-thesis">Thesis: The solution of radiative transfer equation in 2D complex geometries using body-fitted coordinates</p>
+        <div class="tags">
+          <span class="tag">Advanced Thermodynamics I</span>
+          <span class="tag">Advanced Fluid Mechanics I</span>
+          <span class="tag">Convection Heat Transfer</span>
+          <span class="tag">Math Methods for Engineers</span>
+          <span class="tag">Thermal Desalination Systems</span>
+          <span class="tag">Solar Energy Utilization</span>
+          <span class="tag">Continuum Mechanics</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div>
+            <h3>Bachelor of Science, Mechanical Engineering</h3>
+            <p class="card-org">Rajshahi University of Engineering and Technology, Bangladesh</p>
+          </div>
+          <div class="card-date">Dec 2014 · GPA 3.62/4.0</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Experience</div>
+        <h2>Research, teaching &amp; industry</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>Graduate Research Assistant</h3><p class="card-org">Dept. of Mechanical &amp; Aerospace Engineering, University of Tennessee Knoxville</p></div>
+          <div class="card-date">Jun 2022 – Present</div>
+        </div>
+        <ul>
+          <li>Solve the radiative transfer equation using discontinuous Galerkin FEM</li>
+          <li>Apply multilevel mesh refinement across both space and angle domains</li>
+          <li>Implement parallel computing for large-scale solves</li>
+          <li>Apply multigrid techniques to accelerate convergence</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>Graduate Teaching Assistant</h3><p class="card-org">Dept. of Mechanical &amp; Aerospace Engineering, University of Tennessee Knoxville</p></div>
+          <div class="card-date">Jan 2025 – Present</div>
+        </div>
+        <ul><li>Grade homework and exams</li></ul>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>Teaching Assistant — Materials Lab (ME 217)</h3><p class="card-org">Mechanical Engineering Dept., King Fahd University of Petroleum &amp; Minerals</p></div>
+          <div class="card-date">Sep 2021 – Dec 2021</div>
+        </div>
+        <ul><li>Instructed the Materials Lab course</li></ul>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>Research Assistant</h3><p class="card-org">City &amp; Regional Planning Dept., King Fahd University of Petroleum &amp; Minerals</p></div>
+          <div class="card-date">Sep 2020 – Dec 2021</div>
+        </div>
+        <ul>
+          <li>Solved a range of partial differential equations numerically in MATLAB</li>
+          <li>Numerically modeled naphtha reforming kinetics</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>Grader</h3><p class="card-org">Mechanical Engineering Dept., King Fahd University of Petroleum &amp; Minerals</p></div>
+          <div class="card-date">Sep 2019 – May 2021</div>
+        </div>
+        <ul><li>Graded homework and administered exam duty for core ME courses</li></ul>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>Process Engineer</h3><p class="card-org">Compressor R&amp;D, Walton Hi-Tech Industries Ltd., Dhaka, Bangladesh</p></div>
+          <div class="card-date">May 2017 – Dec 2018</div>
+        </div>
+        <ul>
+          <li>Led product implementation and process engineering</li>
+          <li>Ran automatic lathe, milling, drilling &amp; grinding lines for compressor pistons and connecting rods</li>
+          <li>Oversaw an automatic resistance welding line</li>
+          <li>Managed a washing and phosphating line</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>Sales &amp; Service Engineer</h3><p class="card-org">Mason Acoustic Company Ltd., Dhaka, Bangladesh</p></div>
+          <div class="card-date">Aug 2016 – Apr 2017</div>
+        </div>
+        <ul>
+          <li>Owned sales targets for acoustic treatment products</li>
+          <li>Inspected, installed, and maintained acoustic treatments in generator rooms, auditoriums, and TV studios</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>Industrial Internship</h3><p class="card-org">Ashuganj Power Station Company Ltd., Bangladesh</p></div>
+          <div class="card-date"></div>
+        </div>
+        <ul>
+          <li>Investigated operation and maintenance across plant workstations</li>
+          <li>Studied steam boilers, steam and gas turbines, fans, compressors, condensers, gas engines, and pumps</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="publications">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Publications</div>
+        <h2>Journal papers, book chapter &amp; conference proceedings</h2>
+      </div>
+
+      <div class="pub-group">
+        <h3>Journal Papers</h3>
+        <ol class="pub-list">
+          <li><span class="pub-text">M.E. Haque, M.S. Hossain, H.M. Ali. <b>Laminar forced convection heat transfer of nanofluids inside non-circular ducts: A review.</b> <span class="venue">Powder Technology</span>, 2020. <a href="https://doi.org/10.1016/j.powtec.2020.10.042" target="_blank" rel="noopener">doi.org/10.1016/j.powtec.2020.10.042</a></span></li>
+          <li><span class="pub-text">S.M. Rahman, F.S.M. Al-Ismail, M.E. Haque, et al. <b>Electricity Generation in Saudi Arabia: Tracing Opportunities and Challenges to Reducing Greenhouse Gas Emissions.</b> <span class="venue">IEEE Access</span>, vol. 9, pp. 116163–116182, 2021. <a href="https://ieeexplore.ieee.org/abstract/document/9514922" target="_blank" rel="noopener">ieeexplore.ieee.org</a></span></li>
+          <li><span class="pub-text">M. Shafiullah, A.M. Refat, M.E. Haque, et al. <b>Review of Recent Developments in Microgrid Energy Management Strategies.</b> <span class="venue">Sustainability</span>, 14, 14794, 2022. <a href="https://doi.org/10.3390/su142214794" target="_blank" rel="noopener">doi.org/10.3390/su142214794</a></span></li>
+          <li><span class="pub-text">M.E. Haque, S.B. Mansoor, B.S. Yilbas. <b>Computational radiative transport in complex geometries using orthogonal coordinates.</b> <span class="venue">Journal of Non-Equilibrium Thermodynamics</span>, 2023. <a href="https://doi.org/10.1515/jnet-2023-0009" target="_blank" rel="noopener">doi.org/10.1515/jnet-2023-0009</a></span></li>
+          <li><span class="pub-text">H. Wang, M.E. Haque, R. Abedi, S. Mudaliar. <b>Integrating angular and domain decomposition with space-angle discontinuous Galerkin methods in 2D radiative transfer.</b> <span class="venue">Journal of Quantitative Spectroscopy and Radiative Transfer</span>, 329, 109208, 2024. <a href="https://doi.org/10.1016/j.jqsrt.2024.109208" target="_blank" rel="noopener">doi.org/10.1016/j.jqsrt.2024.109208</a></span></li>
+        </ol>
+      </div>
+
+      <div class="pub-group">
+        <h3>Book Chapter</h3>
+        <ol class="pub-list">
+          <li><span class="pub-text">M. Shafiullah, M.E. Haque, S. Hossain, M.S. Hossain, M.J. Rana. <b>Community microgrid energy scheduling based on the grey wolf optimization algorithm.</b> In <span class="venue">Artificial Intelligence-Based Energy Management Systems for Smart Microgrids</span>, pp. 47–73, CRC Press, 2022. <a href="https://www.taylorfrancis.com/chapters/edit/10.1201/b22884-3/3" target="_blank" rel="noopener">taylorfrancis.com</a></span></li>
+        </ol>
+      </div>
+
+      <div class="pub-group">
+        <h3>Conference Papers</h3>
+        <ol class="pub-list">
+          <li><span class="pub-text">M. Shafiullah, M.E. Haque, F.S. Al-Ismail, et al. <b>Backtracking Search Algorithm for PV Module Electrical Parameter Estimation.</b> <span class="venue">CAIDA</span>, IEEE, 2021, pp. 188–193. <a href="https://ieeexplore.ieee.org/abstract/document/9425196" target="_blank" rel="noopener">ieeexplore.ieee.org</a></span></li>
+          <li><span class="pub-text">M. Shafiullah, M.J. Rana, M.E. Haque, et al. <b>An Intelligent Approach for Power Quality Events Detection and Classification.</b> <span class="venue">CAIDA</span>, IEEE, 2021, pp. 194–199. <a href="https://ieeexplore.ieee.org/document/9425215" target="_blank" rel="noopener">ieeexplore.ieee.org</a><span class="badge-award">Best Paper Award</span></span></li>
+          <li><span class="pub-text">M.E. Haque, H. Wang, R. Abedi, S. Mudaliar. <b>A Discontinuous Galerkin Method for Solving Radiative Transfer Equation with Semitransparent Boundary Conditions.</b> <span class="venue">USNC-URSI NRSM</span>, Boulder, CO, 2023, pp. 42–43. <a href="https://ieeexplore.ieee.org/abstract/document/1004330" target="_blank" rel="noopener">ieeexplore.ieee.org</a></span></li>
+          <li><span class="pub-text">M.E. Haque, H. Wang, R. Abedi, S. Mudaliar. <b>A Parallel Implementation of Solving Radiative Transfer Equation using Discontinuous Galerkin Method.</b> <span class="venue">IEEE AP-S/USNC-URSI</span>, Portland, OR, 2023, pp. 1811–1812. <a href="https://ieeexplore.ieee.org/abstract/document/10237432" target="_blank" rel="noopener">ieeexplore.ieee.org</a></span></li>
+          <li><span class="pub-text">M.E. Haque, H. Wang, R. Abedi, S. Mudaliar. <b>Discontinuous Galerkin Method for Radiation Transfer in Plane-Parallel Semi-Transparent Media with Continuous Variable Refractive Index.</b> <span class="venue">USNC-URSI NRSM</span>, 2024, pp. 110–111. <a href="https://ieeexplore.ieee.org/abstract/document/10465029" target="_blank" rel="noopener">ieeexplore.ieee.org</a></span></li>
+          <li><span class="pub-text">M.E. Haque, H. Wang, R. Abedi, S. Mudaliar. <b>Solution of Radiative Transfer Equation for Plane-Parallel Medium Using a Discontinuous Galerkin Method and Adaptive Mesh Refinement.</b> <span class="venue">USNC-URSI NRSM</span>, 2025, pp. 402–403. <a href="https://ieeexplore.ieee.org/abstract/document/10906965/" target="_blank" rel="noopener">ieeexplore.ieee.org</a></span></li>
+          <li><span class="pub-text">M.E. Haque, H. Wang, R. Abedi, S. Mudaliar. <b>Two-Dimensional Radiative Transfer Equation Solved Using a Discontinuous Galerkin Method with Mesh Adaptivity.</b> <span class="venue">IEEE AP-S/USNC-URSI</span>, Ottawa, Canada, 2025.</span></li>
+          <li><span class="pub-text">M.E. Haque, R. Abedi, S. Mudaliar. <b>2D Graded-Index Effects in Radiative Transfer: A Discontinuous Galerkin Method.</b> <span class="venue">USNC-URSI NRSM</span>, 2026.</span></li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Technical Skills</div>
+        <h2>Tools of the trade</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <h3>Programming &amp; Tools</h3>
+          <div class="chiprow">
+            <span class="chip">C++</span><span class="chip">MATLAB</span><span class="chip">Python</span>
+            <span class="chip">EES</span><span class="chip">ANSYS</span><span class="chip">MINITAB</span>
+            <span class="chip">AutoCAD</span><span class="chip">MPI</span><span class="chip">Git</span>
+            <span class="chip">SolidWorks</span><span class="chip">Gmsh</span><span class="chip">ParaView</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Libraries</h3>
+          <div class="chiprow">
+            <span class="chip">COMSOL</span><span class="chip">deal.II</span><span class="chip">PyTorch Geometric</span>
+            <span class="chip">p4est</span><span class="chip">PETSc</span><span class="chip">PiMieScatt</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Domain</h3>
+          <div class="chiprow">
+            <span class="chip">FEM</span><span class="chip">Discontinuous Galerkin</span>
+            <span class="chip">HPC Simulation</span><span class="chip">EM Scattering</span>
+            <span class="chip">ML for Physics</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="honors">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Honors &amp; Awards</div>
+        <h2>Recognition</h2>
+      </div>
+      <ul class="honors-list">
+        <li><span class="honors-year mono">2011–2014</span><span class="honors-text"><b>Technical Board Scholarship</b> — RUET</span></li>
+        <li><span class="honors-year mono">2019</span><span class="honors-text"><b>Deanship Scholarship (MS)</b> — KFUPM</span></li>
+        <li><span class="honors-year mono">2021</span><span class="honors-text"><b>Best Paper Award</b> — 1st International Conference on Artificial Intelligence and Data Analytics, Riyadh, Saudi Arabia</span></li>
+        <li><span class="honors-year mono">2022</span><span class="honors-text"><b>Lloyd W. Crawford Fellowship</b> — UTSI, USA (academic year 2022–2023)</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="eyebrow" style="justify-content:center;">Get in touch</div>
+      <h2>Let's talk about radiative transfer,<br>or anything nearby.</h2>
+      <p>Open to postdoctoral, research, and collaboration opportunities in computational methods, HPC, and physics-based machine learning.</p>
+      <div class="pillrow">
+        <a class="pill" href="mailto:ershadulhaque09@gmail.com"><span class="dot"></span>ershadulhaque09@gmail.com</a>
+        <a class="pill" href="tel:+18659854130"><span class="dot"></span>(865) 985-4130</a>
+        <a class="pill" href="#" target="_blank" rel="noopener"><span class="dot"></span>Google Scholar</a>
+        <a class="pill" href="#" target="_blank" rel="noopener"><span class="dot"></span>LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>© 2026 Md Ershadul Haque · Knoxville, Tennessee</footer>
+
+</body>
+</html>
