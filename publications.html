@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Publications | Md Ershadul Haque</title>
+<meta name="description" content="Academic portfolio of Md Ershadul Haque, a Ph.D. candidate at the University of Tennessee, Knoxville, working on discontinuous Galerkin methods for radiative transfer, adaptive mesh refinement, parallel computing, and graph neural networks.">
+<meta name="author" content="Md Ershadul Haque">
+<meta property="og:title" content="Md Ershadul Haque | Radiative Transfer & Scientific Computing">
+<meta property="og:description" content="Discontinuous Galerkin solvers for radiative transfer that refine in space and angle, run on HPC clusters, and use graph neural networks for scattering.">
+<meta property="og:type" content="profile">
+<meta property="og:image" content="head_shot.jpg">
+<meta name="theme-color" content="#1d1a2e">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#f5f6f8; --surface:#ffffff; --ink:#1d1a2e; --muted:#5a5870; --line:#dcdbe6;
+  --accent:#5b2a86; --accent-ink:#ffffff; --accent-soft:#ece5f4; --warm:#c2410c;
+  --plate:#0d0b16;
+  --serif:"Newsreader", Georgia, "Times New Roman", serif;
+  --sans:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --wrap:72rem;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#121019; --surface:#1b1825; --ink:#ebe8f4; --muted:#a8a4bd; --line:#2f2b3e;
+    --accent:#c9a7ff; --accent-ink:#1b1229; --accent-soft:#2a2240; --warm:#fb923c;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#121019; --surface:#1b1825; --ink:#ebe8f4; --muted:#a8a4bd; --line:#2f2b3e;
+  --accent:#c9a7ff; --accent-ink:#1b1229; --accent-soft:#2a2240; --warm:#fb923c;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth; scroll-padding-top:calc(env(safe-area-inset-top,0px) + 4.5rem)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:1.0625rem; line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+img{max-width:100%; display:block}
+a{color:var(--accent); text-underline-offset:.18em; text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px}
+.skip{position:absolute; left:-999px; top:0; background:var(--accent); color:var(--accent-ink); padding:.5rem 1rem; z-index:100}
+.skip:focus{left:1rem; top:1rem}
+.wrap{max-width:var(--wrap); margin:0 auto; padding:0 1.5rem}
+h1,h2,h3,h4{font-family:var(--serif); font-weight:500; line-height:1.15; margin:0; letter-spacing:-.01em}
+p{margin:0 0 1rem}
+.lede{color:var(--muted); max-width:40rem}
+
+/* ---------- header ---------- */
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:10;
+  background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(10px)}
+header.site{position:sticky; top:env(safe-area-inset-top,0px); z-index:20;
+  background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.bar{display:flex; align-items:center; justify-content:space-between; gap:1rem; height:3.75rem}
+.brand{font-family:var(--serif); font-size:1.2rem; color:var(--ink); text-decoration:none; font-weight:500}
+nav.main ul{list-style:none; display:flex; gap:1.5rem; margin:0; padding:0; align-items:center}
+nav.main a{color:var(--muted); text-decoration:none; font-size:.95rem}
+nav.main a:hover{color:var(--ink)}
+nav.main a.cv{color:var(--accent-ink); background:var(--accent); padding:.4rem .9rem; border-radius:999px; font-weight:500}
+.menu-btn{display:none; background:none; border:1px solid var(--line); color:var(--ink); border-radius:8px;
+  padding:.4rem .7rem; font:inherit; font-size:.9rem; cursor:pointer}
+@media (max-width: 52rem){
+  .menu-btn{display:block}
+  nav.main{position:absolute; left:0; right:0; top:100%; background:var(--bg); border-bottom:1px solid var(--line); display:none}
+  nav.main.open{display:block}
+  nav.main ul{flex-direction:column; align-items:flex-start; gap:0; padding:.5rem 1.5rem 1rem}
+  nav.main li{width:100%}
+  nav.main a{display:block; padding:.6rem 0}
+  nav.main a.cv{display:inline-block; margin-top:.4rem}
+}
+
+/* ---------- hero ---------- */
+.hero{padding:4rem 0 3rem}
+.hero-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:3.5rem; align-items:center}
+.hero h1{font-size:clamp(2.4rem, 5.2vw, 4rem); font-weight:400; max-width:14ch}
+.hero .who{font-family:var(--serif); font-size:1.35rem; margin:0 0 1.25rem; color:var(--muted)}
+.hero .intro{font-size:1.125rem; max-width:34rem; margin:1.5rem 0 2rem}
+.actions{display:flex; flex-wrap:wrap; gap:.75rem}
+.btn{display:inline-flex; align-items:center; gap:.5rem; padding:.7rem 1.2rem; border-radius:999px; text-decoration:none;
+  font-weight:500; font-size:.97rem; border:1px solid var(--line); color:var(--ink); background:var(--surface)}
+.btn.primary{background:var(--accent); color:var(--accent-ink); border-color:var(--accent)}
+.btn:hover{border-color:var(--accent)}
+figure{margin:0}
+.plate{background:var(--plate); border-radius:14px; overflow:hidden; position:relative; aspect-ratio:1/1; touch-action:none}
+.plate canvas{width:100%; height:100%; display:block; cursor:crosshair}
+.plate-cap{font-size:.88rem; color:var(--muted); margin-top:.75rem; max-width:34rem}
+@media (max-width: 52rem){
+  .hero{padding:2.5rem 0 2rem}
+  .hero-grid{grid-template-columns:1fr; gap:2rem}
+}
+
+/* ---------- profile strip ---------- */
+.strip{border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--surface)}
+.strip-grid{display:grid; grid-template-columns:auto minmax(0,1fr) minmax(0,1fr); gap:2.5rem; padding:2rem 0; align-items:center}
+.portrait{width:15rem; height:15rem; border-radius:50%; overflow:hidden; background:var(--accent-soft);
+  display:grid; place-items:center; font-family:var(--serif); font-size:2rem; color:var(--accent)}
+.portrait img{width:100%; height:100%; object-fit:cover}
+.strip h2{font-size:1.4rem; margin-bottom:.25rem}
+.strip p{margin:0; color:var(--muted)}
+.counts{display:flex; flex-wrap:wrap; gap:1.25rem 1.5rem}
+.counts strong{display:block; font-family:var(--serif); font-size:2rem; font-weight:500; line-height:1.1}
+.counts span{font-size:.9rem; color:var(--muted)}
+.links{display:flex; flex-wrap:wrap; gap:.4rem 1.1rem; margin-top:.6rem; font-size:.95rem}
+@media (max-width: 52rem){ .strip-grid{grid-template-columns:auto minmax(0,1fr)} .counts{grid-column:1/-1} }
+
+/* ---------- sections ---------- */
+section.block{padding:5rem 0; border-bottom:1px solid var(--line)}
+.sec-head{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.4fr); gap:3rem; margin-bottom:3rem; align-items:end}
+.sec-head h2{font-size:clamp(1.9rem, 3.6vw, 2.75rem)}
+.sec-head p{color:var(--muted); margin:0; max-width:38rem}
+@media (max-width: 52rem){ section.block{padding:3.5rem 0} .sec-head{grid-template-columns:1fr; gap:1rem; margin-bottom:2rem} }
+
+/* dissertation feature */
+.feature{display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:3rem; padding:2.25rem; background:var(--surface);
+  border:1px solid var(--line); border-radius:14px; margin-bottom:3.5rem}
+.feature .when{font-size:.9rem; color:var(--muted); margin-bottom:.6rem}
+.feature h3{font-size:1.65rem; margin-bottom:1rem}
+.feature blockquote{margin:1.25rem 0 0; padding-left:1rem; border-left:3px solid var(--warm); font-family:var(--serif);
+  font-style:italic; font-size:1.15rem; color:var(--ink)}
+.pipeline{list-style:none; margin:0; padding:0; counter-reset:step}
+.pipeline li{counter-increment:step; position:relative; padding:0 0 1.4rem 2.6rem}
+.pipeline li::before{content:counter(step); position:absolute; left:0; top:0; width:1.8rem; height:1.8rem; border-radius:50%;
+  border:1px solid var(--accent); color:var(--accent); display:grid; place-items:center; font-size:.85rem; font-weight:600}
+.pipeline li:not(:last-child)::after{content:""; position:absolute; left:.88rem; top:1.9rem; bottom:.2rem; width:1px; background:var(--line)}
+.pipeline strong{display:block; font-weight:600}
+.pipeline span{color:var(--muted); font-size:.95rem}
+@media (max-width: 52rem){ .feature{grid-template-columns:1fr; padding:1.5rem; gap:2rem} }
+
+.themes{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:0 3rem}
+.theme{padding:1.4rem 0; border-top:1px solid var(--line)}
+.theme h3{font-size:1.3rem; margin-bottom:.4rem}
+.theme p{color:var(--muted); margin:0 0 .4rem; font-size:.98rem}
+.theme a{font-size:.92rem}
+@media (max-width: 40rem){ .themes{grid-template-columns:1fr} }
+
+.earlier{margin-top:3rem; padding:1.6rem 1.75rem; border-radius:14px; background:var(--accent-soft)}
+.earlier h3{font-size:1.25rem; margin-bottom:.5rem}
+.earlier p{margin:0; max-width:52rem}
+
+
+/* research studies */
+.group-title{font-size:1.5rem; margin:0 0 1.5rem; padding-bottom:.6rem; border-bottom:1px solid var(--line)}
+.group-title:not(:first-of-type){margin-top:4rem}
+.study{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:2.5rem; margin-bottom:3.5rem; align-items:start}
+.study .when{font-size:.9rem; color:var(--muted); margin-bottom:.6rem}
+.study h3{font-size:1.6rem; margin-bottom:1rem}
+.findings{margin:1rem 0 1.25rem; padding-left:1.1rem}
+.findings li{margin-bottom:.5rem}
+.findings li::marker{color:var(--warm)}
+.figs{display:grid; grid-template-columns:1fr; gap:1.25rem}
+.figs.two{grid-template-columns:repeat(2, minmax(0,1fr))}
+.figs.two figure.wide{grid-column:1/-1}
+.figs figure{background:#fff; border:1px solid var(--line); border-radius:10px; padding:.75rem; margin:0}
+.figs img{width:100%; height:auto; border-radius:4px}
+.figs figcaption{font-size:.86rem; color:#4a4860; margin-top:.5rem; line-height:1.45}
+.figs a{display:block}
+@media (min-width: 60.01rem){ .study-text{position:sticky; top:calc(env(safe-area-inset-top,0px) + 5rem)} }
+@media (max-width: 60rem){ .study{grid-template-columns:1fr; gap:1.5rem} }
+@media (max-width: 30rem){ .figs.two{grid-template-columns:1fr} }
+
+/* journey */
+.journey{list-style:none; margin:0; padding:0}
+.stop{display:grid; grid-template-columns:9rem minmax(0,1fr); gap:2rem; padding:2rem 0; border-top:1px solid var(--line)}
+.stop:last-child{border-bottom:1px solid var(--line)}
+.stop .yr{font-family:var(--serif); font-size:1.5rem; line-height:1.2}
+.stop .yr small{display:block; font-family:var(--sans); font-size:.88rem; color:var(--muted); margin-top:.3rem}
+.stop h3{font-size:1.4rem; margin-bottom:.15rem}
+.stop .where{color:var(--muted); margin-bottom:.75rem; font-size:.97rem}
+.stop p{max-width:44rem}
+.tags{display:flex; flex-wrap:wrap; gap:.4rem; list-style:none; padding:0; margin:.25rem 0 .75rem}
+.tags li{font-size:.84rem; padding:.2rem .65rem; border-radius:999px; border:1px solid var(--line); color:var(--muted)}
+.stop .refs{display:flex; flex-wrap:wrap; gap:.3rem 1.2rem; font-size:.93rem}
+@media (max-width: 40rem){ .stop{grid-template-columns:1fr; gap:.5rem} }
+
+/* publications */
+.pub-group{margin-bottom:3rem}
+.pub-group h3{font-size:1.4rem; margin-bottom:.5rem; display:flex; align-items:baseline; gap:.6rem}
+.pub-group h3 span{font-family:var(--sans); font-size:.9rem; color:var(--muted); font-weight:400}
+.pubs{list-style:none; margin:0; padding:0}
+.pub{display:grid; grid-template-columns:4.5rem minmax(0,1fr); gap:1.5rem; padding:1.25rem 0; border-top:1px solid var(--line)}
+.pub .y{font-family:var(--serif); font-size:1.15rem; color:var(--muted)}
+.pub h4{font-size:1.18rem; margin-bottom:.35rem}
+.pub p{margin:0 0 .35rem; font-size:.96rem; color:var(--muted)}
+.pub p b{color:var(--ink); font-weight:600}
+.pub .badge{display:inline-block; font-size:.8rem; padding:.1rem .55rem; border-radius:999px; background:var(--accent-soft); color:var(--accent); margin-left:.4rem; font-weight:500}
+.pub a{font-size:.92rem}
+@media (max-width: 40rem){ .pub{grid-template-columns:1fr; gap:.25rem} }
+
+/* profile */
+.profile{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:3rem 4rem}
+.profile h3{font-size:1.35rem; margin-bottom:.75rem; padding-bottom:.6rem; border-bottom:1px solid var(--line)}
+.rows{list-style:none; margin:0; padding:0}
+.rows li{display:grid; grid-template-columns:7.5rem minmax(0,1fr); gap:1rem; padding:.65rem 0}
+.rows .d{color:var(--muted); font-size:.92rem; padding-top:.1rem}
+.rows strong{font-weight:600; display:block}
+.rows span{color:var(--muted); font-size:.95rem}
+.skills{display:grid; grid-template-columns:1fr; gap:.8rem; margin:0}
+.skills div{display:grid; grid-template-columns:11.5rem minmax(0,1fr); gap:1rem}
+.skills dt{font-weight:600}
+.skills dd{margin:0; color:var(--muted)}
+@media (max-width: 52rem){ .profile{grid-template-columns:1fr} }
+@media (max-width: 30rem){ .rows li, .skills div{grid-template-columns:1fr; gap:.15rem} }
+
+/* contact */
+.contact{padding:5rem 0}
+.contact h2{font-size:clamp(1.9rem, 3.6vw, 2.75rem); max-width:22ch; margin-bottom:1rem}
+.contact-grid{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:1rem; margin-top:2rem}
+.contact-grid a{display:block; padding:1.2rem 1.25rem; border:1px solid var(--line); border-radius:12px; text-decoration:none;
+  color:var(--ink); background:var(--surface)}
+.contact-grid a:hover{border-color:var(--accent)}
+.contact-grid span{display:block; font-size:.88rem; color:var(--muted); margin-bottom:.2rem}
+.contact-grid strong{font-weight:500; overflow-wrap:anywhere}
+@media (max-width: 52rem){ .contact-grid{grid-template-columns:repeat(2, minmax(0,1fr))} }
+@media (max-width: 30rem){ .contact-grid{grid-template-columns:1fr} }
+
+footer.site{border-top:1px solid var(--line); padding:2rem 0; font-size:.9rem; color:var(--muted)}
+footer .bar{height:auto; flex-wrap:wrap}
+footer a{color:var(--muted)}
+.links a{display:inline-flex; align-items:center; gap:.4rem}
+.links .ico{width:1.05em; height:1.05em; flex:none; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.links .ico-tag{display:inline-grid; place-items:center; width:1.15em; height:1.15em; flex:none; border:1.6px solid currentColor; border-radius:3px; font-size:.68em; font-weight:700; line-height:1}
+
+/* ===== per-page color themes ===== */
+body.t-home{--accent:#5b2a86; --accent-ink:#ffffff; --accent-soft:#ebe3f5; --bg:#f4f1f8; --surface:#ffffff; --ink:#1d1a2e; --muted:#4d4a63; --line:#dcd5e8; --deep:#2e1450; --mid:#6d3aa0;}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) body.t-home{--accent:#c9a7ff; --accent-ink:#121019; --accent-soft:#2a2240; --bg:#121019; --surface:#1b1825; --ink:#ebe8f4; --muted:#b3afc7; --line:#2f2b3e; --deep:#2e1450; --mid:#6d3aa0;} }
+:root[data-theme="dark"] body.t-home{--accent:#c9a7ff; --accent-ink:#121019; --accent-soft:#2a2240; --bg:#121019; --surface:#1b1825; --ink:#ebe8f4; --muted:#b3afc7; --line:#2f2b3e; --deep:#2e1450; --mid:#6d3aa0;}
+.swatch-home{--c:#5b2a86; --cs:#ebe3f5}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .swatch-home{--c:#c9a7ff; --cs:#2a2240} }
+body.t-research{--accent:#0f766e; --accent-ink:#ffffff; --accent-soft:#d9efeb; --bg:#eef6f4; --surface:#ffffff; --ink:#122d29; --muted:#3f5753; --line:#cfe3df; --deep:#083d39; --mid:#138a80;}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) body.t-research{--accent:#5eead4; --accent-ink:#0d1615; --accent-soft:#12302d; --bg:#0d1615; --surface:#142120; --ink:#e4f1ee; --muted:#a8c2bd; --line:#22332f; --deep:#083d39; --mid:#138a80;} }
+:root[data-theme="dark"] body.t-research{--accent:#5eead4; --accent-ink:#0d1615; --accent-soft:#12302d; --bg:#0d1615; --surface:#142120; --ink:#e4f1ee; --muted:#a8c2bd; --line:#22332f; --deep:#083d39; --mid:#138a80;}
+.swatch-research{--c:#0f766e; --cs:#d9efeb}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .swatch-research{--c:#5eead4; --cs:#12302d} }
+body.t-journey{--accent:#9a3412; --accent-ink:#ffffff; --accent-soft:#f8e4d6; --bg:#f8f1ea; --surface:#ffffff; --ink:#2c1a10; --muted:#5c4a3d; --line:#e8d9cc; --deep:#5a1d09; --mid:#b4471e;}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) body.t-journey{--accent:#fdba74; --accent-ink:#17110d; --accent-soft:#2e2016; --bg:#17110d; --surface:#211912; --ink:#f3ebe4; --muted:#c7b5a6; --line:#3a2b20; --deep:#5a1d09; --mid:#b4471e;} }
+:root[data-theme="dark"] body.t-journey{--accent:#fdba74; --accent-ink:#17110d; --accent-soft:#2e2016; --bg:#17110d; --surface:#211912; --ink:#f3ebe4; --muted:#c7b5a6; --line:#3a2b20; --deep:#5a1d09; --mid:#b4471e;}
+.swatch-journey{--c:#9a3412; --cs:#f8e4d6}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .swatch-journey{--c:#fdba74; --cs:#2e2016} }
+body.t-publications{--accent:#1d4ed8; --accent-ink:#ffffff; --accent-soft:#dfe7fa; --bg:#eef2fa; --surface:#ffffff; --ink:#121a31; --muted:#47536d; --line:#d4dcec; --deep:#14286b; --mid:#2f5fd6;}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) body.t-publications{--accent:#93b4f5; --accent-ink:#0e1320; --accent-soft:#1b2640; --bg:#0e1320; --surface:#151c2c; --ink:#e6ebf5; --muted:#adb7cd; --line:#263049; --deep:#14286b; --mid:#2f5fd6;} }
+:root[data-theme="dark"] body.t-publications{--accent:#93b4f5; --accent-ink:#0e1320; --accent-soft:#1b2640; --bg:#0e1320; --surface:#151c2c; --ink:#e6ebf5; --muted:#adb7cd; --line:#263049; --deep:#14286b; --mid:#2f5fd6;}
+.swatch-publications{--c:#1d4ed8; --cs:#dfe7fa}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .swatch-publications{--c:#93b4f5; --cs:#1b2640} }
+body.t-profile{--accent:#166534; --accent-ink:#ffffff; --accent-soft:#dcefe2; --bg:#eef5f0; --surface:#ffffff; --ink:#122418; --muted:#46594d; --line:#d0e2d6; --deep:#0c3a20; --mid:#1f7a45;}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) body.t-profile{--accent:#86efac; --accent-ink:#0e1510; --accent-soft:#18291d; --bg:#0e1510; --surface:#152019; --ink:#e5f1e8; --muted:#aac1b1; --line:#233428; --deep:#0c3a20; --mid:#1f7a45;} }
+:root[data-theme="dark"] body.t-profile{--accent:#86efac; --accent-ink:#0e1510; --accent-soft:#18291d; --bg:#0e1510; --surface:#152019; --ink:#e5f1e8; --muted:#aac1b1; --line:#233428; --deep:#0c3a20; --mid:#1f7a45;}
+.swatch-profile{--c:#166534; --cs:#dcefe2}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .swatch-profile{--c:#86efac; --cs:#18291d} }
+body.t-contact{--accent:#be123c; --accent-ink:#ffffff; --accent-soft:#f8dde4; --bg:#f9eef1; --surface:#ffffff; --ink:#2e1118; --muted:#5e4650; --line:#ecd5dc; --deep:#6d0a25; --mid:#c52a4f;}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) body.t-contact{--accent:#fda4af; --accent-ink:#180e11; --accent-soft:#2e1820; --bg:#180e11; --surface:#22151a; --ink:#f5e8eb; --muted:#c9afb6; --line:#3a232a; --deep:#6d0a25; --mid:#c52a4f;} }
+:root[data-theme="dark"] body.t-contact{--accent:#fda4af; --accent-ink:#180e11; --accent-soft:#2e1820; --bg:#180e11; --surface:#22151a; --ink:#f5e8eb; --muted:#c9afb6; --line:#3a232a; --deep:#6d0a25; --mid:#c52a4f;}
+.swatch-contact{--c:#be123c; --cs:#f8dde4}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .swatch-contact{--c:#fda4af; --cs:#2e1820} }
+
+body{background:var(--bg)}
+header.site{border-bottom:3px solid var(--accent)}
+nav.main a[aria-current="page"]{color:var(--accent); font-weight:600}
+nav.main a.cv[aria-current="page"]{color:var(--accent-ink)}
+.page-band{position:relative; overflow:hidden; color:#fff; background:linear-gradient(135deg, var(--deep) 0%, var(--mid) 100%); padding:4.25rem 0 3.5rem}
+.page-band::after{content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(600px 300px at 90% 0%, rgba(255,255,255,.18), transparent 70%), radial-gradient(500px 260px at 0% 100%, rgba(0,0,0,.18), transparent 70%)}
+.page-band .wrap{position:relative; z-index:1}
+.page-band .back-home{display:table; margin-bottom:1.1rem; font-size:.95rem; font-weight:500; color:#fff; text-decoration:none; padding:.35rem .85rem .35rem .7rem; border:1px solid rgba(255,255,255,.4); border-radius:999px; background:rgba(255,255,255,.12)}
+.page-band .back-home:hover{background:rgba(255,255,255,.22)}
+.page-band .kicker{display:inline-block; font-size:.85rem; font-weight:600; color:#fff; background:rgba(255,255,255,.2); padding:.25rem .75rem; border-radius:999px; margin-bottom:1rem}
+.page-band h1{font-size:clamp(2.2rem, 4.6vw, 3.4rem); max-width:22ch; margin-bottom:1rem; color:#fff}
+.page-band p{color:rgba(255,255,255,.88); max-width:44rem; margin:0; font-size:1.1rem}
+.page-band a:not(.back-home){color:#fff; text-decoration:underline}
+body{background:radial-gradient(1100px 520px at 100% -5%, var(--accent-soft), transparent 65%) no-repeat, var(--bg)}
+header.site{background:color-mix(in srgb, var(--bg) 88%, transparent)}
+.hero{background:linear-gradient(180deg, transparent, color-mix(in srgb, var(--accent-soft) 45%, transparent))}
+.strip{background:var(--surface)}
+.explore{background:linear-gradient(180deg, var(--bg), var(--accent-soft))}
+section.block{background:transparent}
+/* header like Anto's: monogram, name, small-caps subtitle, underline on active link */
+header.site{border-bottom:1px solid var(--line)}
+.bar{height:4.4rem}
+.brand{display:flex; align-items:center; gap:.75rem; font-family:var(--sans); text-decoration:none; color:var(--ink)}
+.brand:hover{text-decoration:none}
+.mono{width:2.75rem; height:2.75rem; border-radius:50%; flex:none; display:grid; place-items:center; background:var(--deep); color:#fff; font-family:var(--serif); font-size:.8rem; letter-spacing:.03em}
+.brand-text strong{display:block; font-size:1.12rem; font-weight:600; line-height:1.15; color:var(--ink)}
+.brand-text small{display:block; font-size:.7rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-top:.15rem}
+nav.main ul{gap:1.6rem}
+nav.main a{font-weight:500; color:var(--muted); position:relative; padding:.3rem 0}
+nav.main a:not(.cv)::after{content:""; position:absolute; left:0; right:0; bottom:-.35rem; height:2px; border-radius:2px; background:var(--accent); transform:scaleX(0); transition:transform .2s ease}
+nav.main a:not(.cv):hover::after, nav.main a[aria-current="page"]:not(.cv)::after{transform:scaleX(1)}
+nav.main a[aria-current="page"]{color:var(--ink); font-weight:600}
+nav.main a.cv{background:var(--deep); color:#fff; padding:.55rem 1.05rem; font-weight:600}
+nav.main a.cv:hover{filter:brightness(1.15)}
+@media (prefers-reduced-motion: reduce){ nav.main a::after{transition:none} }
+@media (max-width: 52rem){ nav.main a:not(.cv)::after{display:none} nav.main a[aria-current="page"]{color:var(--accent)} }
+.contact-cols{display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:3.5rem; align-items:start}
+.cc-intro h2{font-size:clamp(1.7rem, 3vw, 2.2rem); margin-bottom:.8rem}
+.cc-intro p{color:var(--muted)}
+.cc-also{margin:1.75rem 0 .6rem; font-size:.9rem; font-weight:600; color:var(--ink) !important}
+.cc-profiles{display:flex; flex-wrap:wrap; gap:.6rem}
+.cc-profiles a{display:inline-flex; gap:.35rem; align-items:center; padding:.45rem .9rem; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--ink); text-decoration:none; font-size:.95rem}
+.cc-profiles a span{color:var(--accent)}
+.cc-profiles a:hover{border-color:var(--accent)}
+.cc-list{display:flex; flex-direction:column; gap:.85rem}
+.cc-item{display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:1rem; padding:1.1rem 1.25rem; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:12px; background:var(--surface); color:var(--ink); text-decoration:none; box-shadow:0 1px 2px rgba(0,0,0,.04), 0 8px 20px -14px rgba(0,0,0,.25); transition:transform .15s ease, border-color .15s ease}
+.cc-item:hover{transform:translateX(4px); border-color:var(--accent)}
+@media (prefers-reduced-motion: reduce){ .cc-item{transition:none} .cc-item:hover{transform:none} }
+.cc-ico{width:2.6rem; height:2.6rem; border-radius:10px; display:grid; place-items:center; background:var(--accent-soft); color:var(--accent)}
+.cc-ico svg{width:1.3rem; height:1.3rem; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.cc-label{display:block; font-size:.85rem; color:var(--muted)}
+.cc-text strong{font-weight:600; font-size:1.05rem; overflow-wrap:anywhere}
+.cc-arrow{font-size:1.35rem; color:var(--accent); line-height:1}
+@media (max-width: 52rem){ .contact-cols{grid-template-columns:1fr; gap:2rem} }
+@media (max-width: 26rem){ .cc-text strong{font-size:.92rem} .cc-item{gap:.75rem; padding:1rem} }
+.back-bottom{text-align:center; padding:0 0 3.5rem}
+.back-bottom a{display:inline-block; font-weight:500; color:#fff; background:linear-gradient(135deg, var(--deep), var(--mid)); text-decoration:none; padding:.75rem 1.5rem; border-radius:999px; box-shadow:0 8px 20px -10px var(--deep)}
+.back-bottom a:hover{filter:brightness(1.1)}
+.study .figs figure, .figs figure{box-shadow:0 1px 2px rgba(0,0,0,.04), 0 6px 18px -10px rgba(0,0,0,.12)}
+.feature, .earlier, .contact-grid a, .stop .fig, .pub-group{position:relative}
+.earlier{border:1px solid var(--line)}
+.pub{background:transparent}
+.contact{background:transparent}
+@media (max-width: 52rem){ .page-band{padding:2.75rem 0 2.25rem} }
+.explore{padding:4.5rem 0}
+.explore h2{font-size:clamp(1.8rem, 3.4vw, 2.5rem); margin-bottom:.6rem}
+.explore .lede{color:var(--muted); margin-bottom:2rem}
+.explore-grid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:1rem}
+.explore-grid a{display:block; text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-top:5px solid var(--c); border-radius:12px; padding:1.3rem 1.3rem 1.4rem}
+.explore-grid a:hover{background:var(--cs); border-color:var(--c)}
+.explore-grid strong{display:block; font-family:var(--serif); font-size:1.35rem; font-weight:500; color:var(--c); margin-bottom:.35rem}
+.explore-grid span{color:var(--muted); font-size:.96rem}
+@media (max-width: 52rem){ .explore-grid{grid-template-columns:repeat(2, minmax(0,1fr))} }
+@media (max-width: 32rem){ .explore-grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body id="top" class="t-publications">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="brand" href="index.html"><span class="mono" aria-hidden="true">MEH</span><span class="brand-text"><strong>Md Ershadul Haque</strong><small>Academic portfolio</small></span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="main" id="nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="journey.html">Journey</a></li>
+        <li><a href="publications.html" aria-current="page">Publications</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a class="cv" href="CV_Md_Ershadul_Haque.pdf">CV <span aria-hidden="true">↗</span></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<header class="page-band">
+  <div class="wrap">
+    <a class="back-home" href="index.html">← Back to Home</a>
+    <span class="kicker">Publications</span>
+    <h1>Publications.</h1>
+    <p>Manuscripts, journal articles, a book chapter, and conference papers on radiative transfer, heat transfer, and energy systems. Newest first.</p>
+  </div>
+</header>
+<!-- ================= PUBLICATIONS ================= -->
+<section class="block" style="border-bottom:0" id="publications">
+  <div class="wrap">
+    
+
+    <div class="pub-group">
+      <h3>Manuscripts <span>2</span></h3>
+      <ol class="pubs">
+        <li class="pub"><div class="y">2026</div><div>
+          <h4>Space-Angle Discontinuous Galerkin Solution of the Radiative Transfer Equation in Continuous Graded-Index Media with Refracting Interfaces</h4>
+          <p><b>Md Ershadul Haque</b>, Hang Wang, Reza Abedi, and Saba Mudaliar. Manuscript.</p>
+          <a href="research.html#graded-index">Summary and figures</a></div></li>
+        <li class="pub"><div class="y">2026</div><div>
+          <h4>An Adaptive Discontinuous Galerkin Method for Plane-Parallel and Axisymmetric Radiative Transfer Equation</h4>
+          <p><b>Md Ershadul Haque</b>, Hang Wang, Reza Abedi, and Saba Mudaliar. Manuscript.</p>
+          <a href="research.html#adaptive-refinement">Summary and figures</a></div></li>
+      </ol>
+    </div>
+
+    <div class="pub-group">
+      <h3>Journal articles <span>5</span></h3>
+      <ol class="pubs">
+        <li class="pub"><div class="y">2024</div><div>
+          <h4>Integrating Angular and Domain Decomposition with Space-Angle Discontinuous Galerkin Methods in 2D Radiative Transfer</h4>
+          <p>Hang Wang, <b>Md Ershadul Haque</b>, Reza Abedi, and Saba Mudaliar. <i>Journal of Quantitative Spectroscopy and Radiative Transfer</i> 329, 109208.</p>
+          <a href="https://doi.org/10.1016/j.jqsrt.2024.109208">DOI</a></div></li>
+        <li class="pub"><div class="y">2023</div><div>
+          <h4>Computational Radiative Transport in Complex Geometries Using Orthogonal Coordinates</h4>
+          <p><b>Md Ershadul Haque</b>, Saad Bin Mansoor, and Bekir Sami Yilbas. <i>Journal of Non-Equilibrium Thermodynamics</i>.</p>
+          <a href="https://doi.org/10.1515/jnet-2023-0009">DOI</a></div></li>
+        <li class="pub"><div class="y">2022</div><div>
+          <h4>Review of Recent Developments in Microgrid Energy Management Strategies</h4>
+          <p>M. Shafiullah, A. M. Refat, <b>M. E. Haque</b>, D. M. H. Chowdhury, M. S. Hossain, A. G. Alharbi, M. S. Alam, A. Ali, and S. Hossain. <i>Sustainability</i> 14, 14794.</p>
+          <a href="https://doi.org/10.3390/su142214794">DOI</a></div></li>
+        <li class="pub"><div class="y">2021</div><div>
+          <h4>Electricity Generation in Saudi Arabia: Tracing Opportunities and Challenges to Reducing Greenhouse Gas Emissions</h4>
+          <p>S. M. Rahman, F. S. M. Al-Ismail, <b>M. E. Haque</b>, M. Shafiullah, M. R. Islam, M. T. Chowdhury, M. S. Alam, S. A. Razzak, A. Ali, and Z. A. Khan. <i>IEEE Access</i> 9, 116163–116182.</p>
+          <a href="https://doi.org/10.1109/ACCESS.2021.3105378">DOI</a></div></li>
+        <li class="pub"><div class="y">2020</div><div>
+          <h4>Laminar Forced Convection Heat Transfer of Nanofluids Inside Non-Circular Ducts: A Review</h4>
+          <p><b>M. E. Haque</b>, M. S. Hossain, and H. M. Ali. <i>Powder Technology</i>.</p>
+          <a href="https://doi.org/10.1016/j.powtec.2020.10.042">DOI</a></div></li>
+      </ol>
+    </div>
+
+    <div class="pub-group">
+      <h3>Book chapter <span>1</span></h3>
+      <ol class="pubs">
+        <li class="pub"><div class="y">2022</div><div>
+          <h4>Community Microgrid Energy Scheduling Based on the Grey Wolf Optimization Algorithm</h4>
+          <p>M. Shafiullah, <b>M. E. Haque</b>, S. Hossain, M. S. Hossain, and M. J. Rana. In <i>Artificial Intelligence-Based Energy Management Systems for Smart Microgrids</i>, pp. 47–73. CRC Press.</p>
+          <a href="https://www.taylorfrancis.com/chapters/edit/10.1201/b22884-3/">Chapter page</a></div></li>
+      </ol>
+    </div>
+
+    <div class="pub-group">
+      <h3>Conference papers <span>7</span></h3>
+      <ol class="pubs">
+        <li class="pub"><div class="y">2026</div><div>
+          <h4>2D Graded-Index Effects in Radiative Transfer: A Discontinuous Galerkin Method</h4>
+          <p><b>Md Ershadul Haque</b>, Reza Abedi, and Saba Mudaliar. <i>USNC-URSI National Radio Science Meeting (NRSM)</i>, pp. 327–328. IEEE.</p>
+          <a href="https://ieeexplore.ieee.org/abstract/document/11550967">IEEE Xplore</a></div></li>
+        <li class="pub"><div class="y">2025</div><div>
+          <h4>Solution of Radiative Transfer Equation for Plane-Parallel Medium Using a Discontinuous Galerkin Method and Adaptive Mesh Refinement</h4>
+          <p><b>Md Ershadul Haque</b>, Hang Wang, Reza Abedi, and Saba Mudaliar. <i>USNC-URSI National Radio Science Meeting (NRSM)</i>. IEEE.</p>
+          <a href="https://ieeexplore.ieee.org/abstract/document/10906965">IEEE Xplore</a></div></li>
+        <li class="pub"><div class="y">2024</div><div>
+          <h4>Discontinuous Galerkin Method for Radiation Transfer in Plane-Parallel Semi-Transparent Media with Continuous Variable Refractive Index</h4>
+          <p><b>Md Ershadul Haque</b>, Hang Wang, Reza Abedi, and Saba Mudaliar. <i>USNC-URSI National Radio Science Meeting (NRSM)</i>, pp. 110–111. IEEE.</p>
+          <a href="https://ieeexplore.ieee.org/abstract/document/10465029">IEEE Xplore</a></div></li>
+        <li class="pub"><div class="y">2023</div><div>
+          <h4>A Parallel Implementation of Solving Radiative Transfer Equation Using Discontinuous Galerkin Method</h4>
+          <p><b>M. E. Haque</b>, H. Wang, R. Abedi, and S. Mudaliar. <i>IEEE International Symposium on Antennas and Propagation and USNC-URSI Radio Science Meeting</i>, Portland, OR, pp. 1811–1812.</p>
+          <a href="https://doi.org/10.1109/USNC-URSI52151.2023.10237432">DOI</a></div></li>
+        <li class="pub"><div class="y">2023</div><div>
+          <h4>A Discontinuous Galerkin Method for Solving Radiative Transfer Equation with Semitransparent Boundary Conditions</h4>
+          <p><b>M. E. Haque</b>, H. Wang, R. Abedi, and S. Mudaliar. <i>USNC-URSI National Radio Science Meeting (NRSM)</i>, Boulder, CO, pp. 42–43.</p>
+          <a href="https://doi.org/10.23919/USNC-URSINRSM57470.2023.10043130">DOI</a></div></li>
+        <li class="pub"><div class="y">2021</div><div>
+          <h4>An Intelligent Approach for Power Quality Events Detection and Classification <span class="badge">Best Paper Award</span></h4>
+          <p>M. Shafiullah, M. J. Rana, <b>M. E. Haque</b>, A. Islam, S. M. Rahman, M. S. Alam, and A. Ali. <i>1st International Conference on Artificial Intelligence and Data Analytics (CAIDA)</i>, pp. 194–199. IEEE.</p>
+          <a href="https://ieeexplore.ieee.org/document/9425215">IEEE Xplore</a></div></li>
+        <li class="pub"><div class="y">2021</div><div>
+          <h4>Backtracking Search Algorithm for PV Module Electrical Parameter Estimation</h4>
+          <p>M. Shafiullah, <b>M. E. Haque</b>, F. S. Al-Ismail, A. Islam, M. S. Alam, A. Ali, and S. M. Rahman. <i>1st International Conference on Artificial Intelligence and Data Analytics (CAIDA)</i>, pp. 188–193. IEEE.</p>
+          <a href="https://ieeexplore.ieee.org/abstract/document/9425196">IEEE Xplore</a></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<div class="back-bottom"><a href="index.html">← Back to Home</a></div>
+</main>
+
+<footer class="site">
+  <div class="wrap bar">
+    <span>Md Ershadul Haque. Radiative transfer and scientific computing.</span>
+    <span>Updated November 2026. <a href="index.html">Home</a> · <a href="#top">Back to top</a></span>
+  </div>
+</footer>
+
+<script>
+// ---------- mobile menu ----------
+(function(){
+  var btn = document.querySelector('.menu-btn'), nav = document.getElementById('nav');
+  btn.addEventListener('click', function(){
+    var open = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  nav.addEventListener('click', function(e){
+    if (e.target.tagName === 'A'){ nav.classList.remove('open'); btn.setAttribute('aria-expanded', false); }
+  });
+})();
+
+</script>
+</body>
+</html>
