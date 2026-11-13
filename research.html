@@ -446,19 +446,24 @@ nav.main a.cv:hover{filter:brightness(1.15)}
     <!-- ===== JQSRT parallel ===== -->
     <article class="study" id="parallel">
       <div class="study-text">
-        <p class="when">Journal of Quantitative Spectroscopy and Radiative Transfer, 2024. With Hang Wang, Reza Abedi, and Saba Mudaliar.</p>
+        <p class="when">Journal of Quantitative Spectroscopy and Radiative Transfer, 329 (2024), 109208. With Hang Wang, Reza Abedi, and Saba Mudaliar.</p>
         <h3><span class="hico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1.5"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span>Parallel space-angle DG: angular and domain decomposition</h3>
-        <p>These were the first parallel implementations of a space-angle DG formulation for radiative transfer. Angular decomposition splits directions across processors and iterates on scattering; domain decomposition splits space and solves the full system directly with MUMPS. We combined them into a hybrid scheme that balances the strengths of each.</p>
+        <p>The space-angle DG method discretizes the 2D radiative transfer equation in both space and angle, which gives accurate solutions but a large, dense system once scattering couples every direction. This work makes the method parallel. Angular decomposition gives each processor a block of directions and solves them with a Gauss–Seidel iteration on the scattering term. Domain decomposition splits the spatial mesh, adds ghost elements at subdomain interfaces, and solves the whole system directly with the distributed solver MUMPS.</p>
+        <p><b>Key contributions</b></p>
         <ul class="findings">
-          <li>On 256 processors, the best hybrid layout (32 angular × 8 spatial) reached a speedup of 242 over one processor, versus 168 for angular decomposition alone.</li>
-          <li>Parallel efficiency rose from 0.66 to 0.95.</li>
-          <li>Applied to enclosures with circular and square obstacles, showing how finer angular resolution removes ray effects.</li>
+          <li><b>First parallel space-angle DG solvers.</b> Angular and domain decomposition implemented for a space-angle DG formulation for the first time, with strong scaling tested up to 256 processors.</li>
+          <li><b>First hybrid angular-domain scheme</b> for finite element and DG radiative transfer, combining the low communication of angular decomposition with the direct solve of domain decomposition.</li>
+          <li><b>Scaling insight.</b> Angular decomposition scaled well (speedups of about 20 and 40 on 16 and 32 processors), while domain decomposition was limited by the MUMPS solve, which took over 90% of the run time.</li>
+          <li><b>Optimal processor split.</b> On 256 processors, a 32 × 8 angular-by-spatial layout gave a speedup of 242 over one processor, compared with 168 for angular decomposition alone, raising parallel efficiency from 0.66 to 0.95. The best number of spatial processors grows with the total: about 2, 4, and 8 for 32, 64, and 256 processors.</li>
+          <li><b>Validation and application.</b> Matched exact heat-flux solutions in a trapezoidal enclosure, then used the best hybrid setup to simulate enclosures with circular and square obstacles, where finer angular resolution removes ray effects.</li>
         </ul>
         <a href="https://doi.org/10.1016/j.jqsrt.2024.109208">Read the article (DOI)</a>
       </div>
       <div class="figs two">
-        <figure class="wide"><a href="images/research/jqsrt-obstacles-temperature.webp"><img src="images/research/jqsrt-obstacles-temperature.webp" alt="Temperature fields in square enclosures with nine circular (left) and nine square (right) obstacles, hot on the left wall." loading="lazy"></a><figcaption>Temperature in enclosures with circular and square obstacles, 128 × 16 angular mesh.</figcaption></figure>
-        <figure><a href="images/research/jqsrt-hybrid-runtime.webp"><img src="images/research/jqsrt-hybrid-runtime.webp" alt="Plot of total run time against number of domain-decomposition processors for 32, 64, and 256 total processors; each curve has a minimum." loading="lazy"></a><figcaption>Run time against domain-decomposition processors: each total has an optimal split.</figcaption></figure>
+        <figure class="wide"><a href="images/research/jqsrt-angular-decomposition.webp"><img src="images/research/jqsrt-angular-decomposition.webp" alt="Left: a triangular spatial element extruded in angle. Right: 16 angular slabs grouped into four subdomains, with one subdomain outlined in red." loading="lazy"></a><figcaption>Angular decomposition: each spatial element is extruded in angle, and the angular slabs are divided among processors.</figcaption></figure>
+        <figure class="wide"><a href="images/research/jqsrt-domain-decomposition.webp"><img src="images/research/jqsrt-domain-decomposition.webp" alt="Two spatial subdomains of a triangular mesh, each with ghost elements copied from its neighbor; inflow edges in red and outflow edges in blue." loading="lazy"></a><figcaption>Domain decomposition: each subdomain carries ghost elements from its neighbor (inflow edges red, outflow edges blue).</figcaption></figure>
+        <figure class="wide"><a href="images/research/jqsrt-hybrid-ad-dd.webp"><img style="max-width:30rem; margin:0 auto" src="images/research/jqsrt-hybrid-ad-dd.webp" alt="Log-log plot of total run time against number of domain-decomposition processors for 32, 64, and 256 total processors; each curve has a minimum." loading="lazy"></a><figcaption>Hybrid scheme: run time against spatial processors, with an optimal split for each total.</figcaption></figure>
+        <figure class="wide"><a href="images/research/jqsrt-obstacles-example.webp"><img src="images/research/jqsrt-obstacles-example.webp" alt="Temperature fields in square enclosures with nine circular (left) and nine square (right) obstacles, hot on the left wall." loading="lazy"></a><figcaption>Application: temperature in enclosures with circular and square obstacles.</figcaption></figure>
       </div>
     </article>
 
